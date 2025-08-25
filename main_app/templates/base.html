@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat collector</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <!-- #16 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body>
+    <header class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <ul>
+            <li>
+              <a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;CatCollector</a>
+            </li>
+          </ul>
+          <ul class="right">
+            <li><a href="{% url 'about' %}">About</a></li>
+            <!-- #3-6 -->
+             {% if user.is_authenticated%}
+            <li><a href="{% url 'cats_create' %}">Add a Cat</a></li>
+            <li><a href="{% url 'index' %}">View All My Cats</a></li>
+            <!-- #2-14 -->
+            <li><a href="{% url 'toys_create' %}">Add a Toy</a></li>
+            <li><a href="{% url 'toys_index' %}">View All Toys</a></li>
+            <li>
+              <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+              </form>
+            </li>
+            {%else%}
+            <!-- #3-12 -->
+             <li><a href="{% url 'signup' %}">SignUp</a></li>
+            <li><a href="{% url 'login' %}">LogIn</a></li>
+            {%endif%}
+                        <!-- #3-6  END -->
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main class="container">{% block content %} {% endblock %}</main>
+    <footer class="page-footer">
+      <div class="right">
+        All Rights Reserved, &copy; 2019 Cat Collector &nbsp;
+      </div>
+    </footer>
+  </body>
+</html>
